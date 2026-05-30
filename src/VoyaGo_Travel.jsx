@@ -1,18 +1,16 @@
-﻿import { FontLoader } from './components/VoyaGo/atoms.jsx';
-import Navbar from './components/VoyaGo/Navbar.jsx';
-import Hero from './components/VoyaGo/Hero.jsx';
+﻿import { FontLoader } from "./components/VoyaGo/atoms.jsx";
+import Navbar from "./components/VoyaGo/Navbar.jsx";
+import Hero from "./components/VoyaGo/Hero.jsx";
 import {
   QuickRideSection,
   TrustSection,
   FleetSection,
-  ServicesSection,
   RoutesSection,
-  GallerySection,
   TestimonialsSection,
   BookingSection,
   Footer,
   FloatingWA,
-} from './components/VoyaGo/Sections.jsx';
+} from "./components/VoyaGo/Sections.jsx";
 
 export default function App() {
   return (
@@ -23,9 +21,7 @@ export default function App() {
       <QuickRideSection />
       <TrustSection />
       <FleetSection />
-      <ServicesSection />
       <RoutesSection />
-      <GallerySection />
       <TestimonialsSection />
       <BookingSection />
       <Footer />
