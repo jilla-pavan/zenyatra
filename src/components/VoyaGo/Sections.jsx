@@ -407,7 +407,7 @@ export function FleetSection() {
   ];
 
   return (
-    <section id="fleet" className="bg-[var(--black)] py-[4rem] px-6 xl:px-12">
+    <section id="ride options" className="bg-[var(--black)] py-[4rem] px-6 xl:px-12">
       <div className="mx-auto max-w-[1400px]">
         <div className="text-center mb-12">
           <SectionLabel>Our Fleet</SectionLabel>
