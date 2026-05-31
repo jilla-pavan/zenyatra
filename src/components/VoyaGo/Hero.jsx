@@ -108,9 +108,9 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
           className="font-display hero-title mx-auto mb-4 max-w-[min(100%,820px)] text-[clamp(3.4rem,7.8vw,7.8rem)] font-black uppercase tracking-[-0.04em] leading-[0.9] text-[var(--white)]"
         >
-          <span className="block">Travel Beyond</span>
+          <span className="block">Connecting Roads</span>
           <span className="hero-highlight mt-3 inline-flex rounded-full bg-[rgba(11,182,255,0.1)] border border-[var(--electric)]/20 px-5 py-2 text-[var(--electric)] shadow-[0_20px_80px_rgba(0,0,0,0.16)]">
-            Boundaries
+            Beyond Boundaries
           </span>
         </motion.h1>
 
