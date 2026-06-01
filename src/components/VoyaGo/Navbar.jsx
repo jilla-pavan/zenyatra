@@ -18,11 +18,16 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      initial={{ y: -80, opacity: 0 }}
+      initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed inset-x-0 top-0 z-50 overflow-hidden transition-all duration-300"
+      transition={{
+        duration: 0.45,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      className="fixed inset-x-0 top-0 z-50 overflow-hidden will-change-transform"
       style={{
+        transform: "translateZ(0)",
+        backfaceVisibility: "hidden",
         background:
           "linear-gradient(180deg, rgba(16,16,16,0.97) 0%, rgba(8,8,8,0.98) 100%)",
         backdropFilter: "blur(20px)",
@@ -55,8 +60,8 @@ export default function Navbar() {
       {/* Road Center Line */}
       <div className="pointer-events-none absolute left-0 right-0 top-1/2 -translate-y-1/2">
         <motion.div
-          className="h-[2px]"
-          animate={{
+          className="h-[2px] will-change-transform"
+sss          animate={{
             backgroundPosition: ["0px 0px", "-64px 0px"],
           }}
           transition={{
@@ -75,21 +80,14 @@ export default function Navbar() {
         src={carImage}
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-[8px] left-[-150px] z-20 h-10 w-auto"
-        animate={{
-          x: ["0vw", "120vw"],
-        }}
+        className="pointer-events-none absolute bottom-[8px] z-20 h-10 w-auto"
+        initial={{ x: -150 }}
+        animate={{ x: ["0vw", "120vw"] }}
         transition={{
-          x: {
-            duration: 18,
-            repeat: Infinity,
-            ease: "linear",
-          },
-          rotate: {
-            duration: 18,
-            repeat: Infinity,
-            ease: "linear",
-          },
+          duration: 12,
+          delay: 0.5,
+          repeat: Infinity,
+          ease: "linear",
         }}
       />
       <div className="relative mx-auto flex h-[70px] max-w-[1400px] items-center justify-between px-4 md:px-8">
