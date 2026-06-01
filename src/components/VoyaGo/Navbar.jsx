@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { WA_LINK } from "./constants.jsx";
-import Wheels from "../../../src/assets/car-wheels.png";
+import carImage from "../../../src/assets/car-image.png";
 
 const links = ["Home", "Ride Options", "Routes", "Contact"];
 
@@ -72,13 +72,12 @@ export default function Navbar() {
         />
       </div>
       <motion.img
-        src={Wheels}
+        src={carImage}
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-[8px] left-[-150px] z-0 h-10 w-auto"
+        className="pointer-events-none absolute bottom-[8px] left-[-150px] z-20 h-10 w-auto"
         animate={{
           x: ["0vw", "120vw"],
-          rotate: [0, 3600], // 10 full rotations
         }}
         transition={{
           x: {
@@ -93,7 +92,7 @@ export default function Navbar() {
           },
         }}
       />
-      <div className="relative mx-auto flex h-[74px] max-w-[1400px] items-center justify-between px-4 md:px-8">
+      <div className="relative mx-auto flex h-[70px] max-w-[1400px] items-center justify-between px-4 md:px-8">
         {/* Logo */}
         <a
           href="#home"
