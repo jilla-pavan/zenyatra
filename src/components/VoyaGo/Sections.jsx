@@ -1216,10 +1216,13 @@ export function Footer() {
               <span>Solapur, Maharashtra</span>
             </div>
 
-            <div className="flex items-center gap-2">
+            <a
+              href={`tel:${WHATSAPP_NUMBER}`}
+              className="flex items-center gap-2 hover:text-[var(--electric)] transition-colors"
+            >
               <Phone size={16} className="text-[var(--electric)]" />
-              <span>+91 95797 59888</span>
-            </div>
+              <span>+{WHATSAPP_NUMBER}</span>
+            </a>
           </div>
 
           {/* COPYRIGHT */}
