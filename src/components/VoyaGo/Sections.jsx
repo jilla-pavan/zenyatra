@@ -386,7 +386,7 @@ export function TrustSection() {
       </div>
 
       {/* 🖤 DARK OVERLAY (IMPORTANT FOR PREMIUM LOOK) */}
-      <div className="absolute inset-0 bg-black/30" />
+      <div className="absolute inset-0 bg-black/20" />
 
       {/* subtle glow overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(11,182,255,0.15),transparent_60%)]" />
@@ -419,7 +419,7 @@ export function TrustSection() {
                 key={item.id}
                 className="
                   group relative rounded-2xl
-                  border border-white/10
+                  border border-white/80
                   bg-white/5 backdrop-blur-xl
                   p-8 text-center
                   transition-all duration-300
@@ -666,18 +666,7 @@ export function RoutesSection() {
       id="routes"
       className=" relative overflow-hidden py-14 px-6 xl:px-12"
     >
-      {/* BG IMAGE */}
-      <div className="absolute inset-0">
-        <img
-          src="/images/genz-travel-image-3.png"
-          className="h-full w-full object-cover opacity-20"
-          alt=""
-        />
-      </div>
-
-      {/* DARK OVERLAY */}
-      <div className="absolute inset-0 bg-black/20" />
-
+    
       <div className="mx-auto max-w-[1300px]">
         {/* HEADER */}
         <div className="text-center mb-14">
@@ -760,36 +749,68 @@ export function RoutesSection() {
 export function TestimonialsSection() {
   const reviews = [
     {
-      name: "Ramesh Patil",
+      name: "Rohit Bitla",
       city: "Solapur → Pune",
       rating: 5,
       review:
-        "Excellent service! The Ertiga was spotlessly clean and the driver was very professional. Reached Pune on time.",
-      initials: "RP",
+        "Excellent service! The vehicle was clean, comfortable, and arrived right on time. The journey was smooth from start to finish.",
+      initials: "RB",
     },
     {
-      name: "Anjali Sharma",
+      name: "Keshav Chatla",
       city: "Solapur → Hyderabad",
       rating: 5,
       review:
-        "Driver was punctual, polite and drove very safely. Highly recommended for family trips.",
-      initials: "AS",
+        "Professional driver, transparent pricing, and great support throughout the trip. Highly recommended.",
+      initials: "KC",
     },
     {
-      name: "Kiran Desai",
+      name: "Vivek Devsani",
       city: "Solapur → Bangalore",
       rating: 5,
       review:
-        "Premium experience at reasonable rates. AC and comfort were perfect.",
-      initials: "KD",
+        "Very comfortable ride with excellent AC and seating. Booking process was quick and hassle-free.",
+      initials: "VD",
     },
     {
-      name: "Priya & Vikram",
+      name: "Akshay Bhosle",
+      city: "Solapur → Mumbai",
+      rating: 5,
+      review:
+        "Reliable service and courteous staff. The trip was well organized and completed on schedule.",
+      initials: "AB",
+    },
+    {
+      name: "Samarth Piske",
+      city: "Family Trip",
+      rating: 5,
+      review:
+        "Booked an SUV for a family outing. The vehicle was spacious and the entire experience exceeded expectations.",
+      initials: "SP",
+    },
+    {
+      name: "Vishnu Shastri Jilla",
+      city: "Corporate Travel",
+      rating: 5,
+      review:
+        "Professional service with punctual pickup and excellent communication. Perfect for business travel.",
+      initials: "VJ",
+    },
+    {
+      name: "Shankar Jilla",
+      city: "Solapur → Tirupati",
+      rating: 5,
+      review:
+        "Long-distance journey was extremely comfortable. The driver was experienced and safety-conscious.",
+      initials: "SJ",
+    },
+    {
+      name: "Varun Kalepatil",
       city: "Wedding Transfer",
       rating: 5,
       review:
-        "Flawless wedding travel management. Everything was perfectly handled.",
-      initials: "PV",
+        "Outstanding coordination and premium travel arrangements. Everything was handled perfectly.",
+      initials: "VK",
     },
   ];
 
@@ -847,7 +868,7 @@ export function TestimonialsSection() {
       {/* ANIMATION */}
       <style jsx>{`
         .animate-scroll {
-          animation: scroll 30s linear infinite;
+          animation: scroll 40s linear infinite;
         }
 
         .animate-scroll:hover {
