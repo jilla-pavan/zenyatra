@@ -797,7 +797,7 @@ export function BookingSection() {
     pickup: "",
     drop: "",
     date: "",
-    passengers: "1",
+    passengers: "",
     name: "",
     phone: "",
   });
@@ -809,6 +809,9 @@ export function BookingSection() {
   const recommendedVehicle = useMemo(() => {
     const p = Number(form.passengers);
 
+    // ✅ IMPORTANT: no selection yet
+    if (!form.passengers) return "Select passengers to see recommendation";
+
     if (p <= 4) return "Sedan (4 Seater) — ₹12–₹15/km";
     if (p <= 7) return "SUV / MUV (7 Seater) — ₹16–₹20/km";
     if (p <= 12) return "Tempo Traveller (12 Seater) — ₹22–₹28/km";
@@ -817,7 +820,6 @@ export function BookingSection() {
 
     return "Bus / Coach (35+ Seater) — ₹45–₹60/km";
   }, [form.passengers]);
-
   const handleSubmit = () => {
     const msg = encodeURIComponent(
       `🚗 *New Booking Request — Zenyatra*\n\n👤 Name: ${form.name}\n📞 Phone: ${form.phone}\n📍 Pickup: ${form.pickup}\n🏁 Drop: ${form.drop}\n📅 Date: ${form.date}\n👥 Passengers: ${form.passengers}\n🚘 Recommended Vehicle: ${recommendedVehicle}\n\nPlease confirm availability.`,
@@ -938,28 +940,26 @@ export function BookingSection() {
                     value={form.passengers}
                     onChange={handleChange}
                     className="
-        w-full cursor-pointer appearance-none
-        rounded-xl border border-white/10
-        bg-[#0b0c0f]
-        px-4 py-3 pr-10
-        text-sm text-white
-        outline-none
-        transition
-        focus:border-[var(--electric)]
-        focus:ring-1 focus:ring-[var(--electric)]
-      "
+    w-full cursor-pointer appearance-none
+    rounded-xl border border-white/10
+    bg-[#0b0c0f]
+    px-4 py-3 pr-10
+    text-sm text-white
+    outline-none
+    transition
+    focus:border-[var(--electric)]
+    focus:ring-1 focus:ring-[var(--electric)]
+  "
                   >
+                    {/* REAL FIX: use empty default option but NOT disabled/hidden */}
+                    <option value="">Select passengers</option>
+
                     {["4", "7", "12", "17", "26", "35"].map((p) => (
-                      <option
-                        key={p}
-                        value={p}
-                        className="bg-[#0b0c0f] text-white"
-                      >
+                      <option key={p} value={p}>
                         {p} Passenger{p !== "1" ? "s" : ""}
                       </option>
                     ))}
                   </select>
-
                   {/* Custom dropdown arrow */}
                   <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--electric)]">
                     ▼
@@ -1079,7 +1079,6 @@ export function Footer() {
 export function FloatingWA() {
   return (
     <div className="fixed bottom-8 right-8 z-50 flex items-center justify-center">
-
       {/* 🔥 OUTER GLOW */}
       <div className="absolute h-14 w-14 rounded-full bg-[var(--electric)] opacity-30 blur-xl animate-pulse" />
 
@@ -1107,7 +1106,6 @@ export function FloatingWA() {
       >
         <MessageCircle size={26} />
       </motion.a>
-
     </div>
   );
 }
