@@ -9,7 +9,7 @@ import bangalore from "../../../src/assets/Banglore.png";
 import mumbai from "../../../src/assets/Mumbai.png";
 import sedan from "../../../src/assets/fleet/sedan.png";
 import suv from "../../../src/assets/fleet/suv.png";
-import tempo from "../../../src/assets/fleet/tempo.png";
+import cruizer from "../../../src/assets/fleet/cruizer.png";
 import miniTraveller from "../../../src/assets/fleet/mini-traveller.png";
 import bus from "../../../src/assets/fleet/bus.png";
 import luxuryBus from "../../../src/assets/fleet/luxury-bus.png";
@@ -38,6 +38,7 @@ import {
   Percent,
   Sparkles,
   Tag,
+  ArrowUp,
 } from "lucide-react";
 
 export function QuickRideSection() {
@@ -465,42 +466,51 @@ export function FleetSection() {
       name: "Sedan",
       capacity: "4 Seater",
       image: sedan,
-      price: "₹12/km",
+      oldPrice: "₹15/km",
+      price: "₹13/km",
       badge: "Budget Friendly",
+      popular: true,
     },
     {
       name: "SUV / MUV",
       capacity: "7 Seater",
       image: suv,
-      price: "₹14/km",
+      oldPrice: "₹17/km",
+      price: "₹15/km",
       badge: "Most Popular",
+      popular: true,
     },
     {
-      name: "Tempo Traveller",
+      name: "Cruizer",
       capacity: "12 Seater",
-      image: tempo,
+      image: cruizer,
+      oldPrice: "₹20/km",
       price: "₹18/km",
       badge: "Group Travel",
+      popular: true,
     },
     {
       name: "Mini Traveller",
       capacity: "17 Seater",
       image: miniTraveller,
-      price: "₹22/km",
+      oldPrice: "₹33/km",
+      price: "₹30/km",
       badge: "Large Groups",
     },
     {
       name: "Mini Bus",
       capacity: "26 Seater",
       image: bus,
-      price: "₹28/km",
+      oldPrice: "₹38/km",
+      price: "₹35/km",
       badge: "Tours & Events",
     },
     {
       name: "Bus / Coach",
       capacity: "35+ Seater",
       image: luxuryBus,
-      price: "₹35/km",
+      oldPrice: "₹50/km",
+      price: "₹45/km",
       badge: "Corporate & Weddings",
     },
   ];
@@ -543,12 +553,36 @@ export function FleetSection() {
           {fleet.map((car) => (
             <div
               key={car.name}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] hover:border-[var(--electric)]/30 transition"
+              className={`
+        group relative overflow-hidden rounded-2xl bg-white/[0.02]
+        transition-all duration-300
+
+        ${
+          car.popular
+            ? "border-2 border-[var(--electric)] shadow-[0_0_30px_rgba(11,182,255,0.18)] lg:scale-[1.02]"
+            : "border border-white/10 hover:border-[var(--electric)]/30"
+        }
+      `}
             >
+              {/* POPULAR GLOW */}
+              {car.popular && (
+                <div className="absolute inset-0 bg-[var(--electric)] opacity-[0.03] blur-3xl pointer-events-none z-0" />
+              )}
+
+              {/* POPULAR RIBBON */}
+              {car.popular && (
+                <div className="absolute top-0 left-0 z-30">
+                  <div className="bg-[var(--electric)] text-black text-[10px] font-bold uppercase tracking-wider px-4 py-1 rounded-br-xl">
+                    Popular Choice
+                  </div>
+                </div>
+              )}
+
               {/* IMAGE */}
               <div className="relative h-[220px] overflow-hidden">
                 <img
                   src={car.image}
+                  alt={car.name}
                   className="h-full w-full object-cover group-hover:scale-105 transition duration-500"
                 />
 
@@ -556,26 +590,13 @@ export function FleetSection() {
 
                 {/* BADGE */}
                 <div className="absolute top-4 right-4 z-20">
-                  <span
-                    className="
-      inline-flex items-center
-      rounded-full
-      px-4 py-2
-      text-[12px]
-      font-semibold
-      text-white
-      border border-white/20
-      bg-black/60
-      backdrop-blur-md
-      shadow-[0_8px_25px_rgba(0,0,0,0.45)]
-    "
-                  >
+                  <span className="inline-flex items-center rounded-full px-4 py-2 text-[12px] font-semibold text-white border border-white/20 bg-black/60 backdrop-blur-md shadow-[0_8px_25px_rgba(0,0,0,0.45)]">
                     {car.badge}
                   </span>
                 </div>
 
                 {/* TITLE */}
-                <div className="absolute bottom-4 left-4">
+                <div className="absolute bottom-4 left-4 z-20">
                   <h3 className="text-xl font-semibold text-white">
                     {car.name}
                   </h3>
@@ -585,10 +606,8 @@ export function FleetSection() {
               </div>
 
               {/* CONTENT */}
-              <div className="p-5 space-y-4">
-                {/* PRICE */}
+              <div className="p-5 space-y-4 relative z-10">
                 <div className="flex items-end justify-between">
-                  {/* LABEL */}
                   <div>
                     <span className="text-white/50 text-xs uppercase tracking-[0.2em]">
                       Starting Price
@@ -599,10 +618,17 @@ export function FleetSection() {
                     </div>
                   </div>
 
-                  {/* BIG PRICE */}
                   <div className="text-right">
-                    <div className="text-2xl font-bold text-[var(--electric)] leading-none">
-                      {car.price}
+                    <div className="text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        <span className="text-sm text-white/35 line-through">
+                          {car.oldPrice}
+                        </span>
+
+                        <span className="text-2xl font-bold text-[var(--electric)] leading-none">
+                          {car.price}
+                        </span>
+                      </div>
                     </div>
 
                     <div className="text-[10px] text-white/40 mt-1 uppercase tracking-[0.2em]">
@@ -611,10 +637,17 @@ export function FleetSection() {
                   </div>
                 </div>
 
-                {/* CTA */}
                 <button
                   onClick={() => handleBookNow(car.name)}
-                  className="w-full mt-2 rounded-xl bg-gradient-to-r from-[var(--electric)] to-[var(--electric-light)] py-3 font-semibold text-black transition hover:shadow-[0_12px_35px_rgba(11,182,255,0.25)]"
+                  className={`
+            w-full rounded-xl py-3 font-semibold transition-all duration-300
+
+            ${
+              car.popular
+                ? "bg-gradient-to-r from-[var(--electric)] to-[var(--electric-light)] text-black hover:shadow-[0_12px_35px_rgba(11,182,255,0.35)]"
+                : "bg-white/5 text-white border border-white/10 hover:bg-white/10"
+            }
+          `}
                 >
                   Book Now
                 </button>
@@ -1380,5 +1413,55 @@ export function DiscountPanel() {
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+export function ScrollToTopButton() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      setVisible(window.scrollY > 500);
+    };
+
+    window.addEventListener("scroll", toggleVisibility);
+
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.button
+          onClick={scrollToTop}
+          initial={{ opacity: 0, y: 30, scale: 0.8 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 30, scale: 0.8 }}
+          transition={{ duration: 0.25 }}
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.95 }}
+          className="
+            fixed bottom-28 right-8 z-50
+            h-14 w-14
+            rounded-full
+            bg-black/80
+            backdrop-blur-xl
+            border border-[var(--electric)]/30
+            text-[var(--electric)]
+            shadow-[0_0_25px_rgba(11,182,255,0.25)]
+            flex items-center justify-center
+          "
+        >
+          <ArrowUp size={24} />
+        </motion.button>
+      )}
+    </AnimatePresence>
   );
 }
