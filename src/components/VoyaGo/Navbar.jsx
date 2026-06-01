@@ -61,7 +61,8 @@ export default function Navbar() {
       <div className="pointer-events-none absolute left-0 right-0 top-1/2 -translate-y-1/2">
         <motion.div
           className="h-[2px] will-change-transform"
-sss          animate={{
+          sss
+          animate={{
             backgroundPosition: ["0px 0px", "-64px 0px"],
           }}
           transition={{
@@ -94,23 +95,32 @@ sss          animate={{
         {/* Logo */}
         <a
           href="#home"
-          className="flex items-center gap-3 text-current no-underline"
+          className="flex items-center gap-3 text-current no-underline relative z-10"
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--electric)]/20 bg-gradient-to-br from-[var(--black-2)] to-[#111827] shadow-[0_0_20px_rgba(11,182,255,0.12)]">
+          <div
+            className="
+      flex items-center justify-center
+      h-14 w-14
+      rounded-2xl
+      border border-white/10
+      shadow-[0_0_30px_rgba(11,182,255,0.25)]
+      overflow-hidden
+    "
+          >
             <img
               src="/images/zenyatra-logo-icon.png"
               alt="Zenyatra logo"
-              className="h-8 w-8 object-contain"
+              className="h-14 w-14  object-contain"
             />
           </div>
 
           <div>
-            <div className="font-display text-lg font-semibold tracking-[0.15em] text-white">
+            <div className="font-display text-xl font-semibold tracking-[0.15em] text-white">
               ZEN<span className="text-[var(--electric)]">YATRA</span>
             </div>
 
-            <div className="text-[9px] uppercase tracking-[0.25em] text-white/50">
-              Connecting Roads Beyond Boundaries
+            <div className="text-[10px] uppercase tracking-[0.25em] text-white/60">
+              Travel Beyond Boundaries
             </div>
           </div>
         </a>
