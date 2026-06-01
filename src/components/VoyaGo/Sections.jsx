@@ -44,7 +44,6 @@ export function QuickRideSection() {
   const [pickup, setPickup] = useState("");
   const [drop, setDrop] = useState("");
   const [vehicle, setVehicle] = useState("4-seater");
-  const [submitted, setSubmitted] = useState(false);
 
   const locations = [
     "Solapur",
@@ -237,42 +236,44 @@ export function QuickRideSection() {
             </div>
 
             <button
+              disabled={!pickup || !drop || !vehicle}
               onClick={() => {
+                if (!pickup || !drop || !vehicle) return;
+
+                const vehicleName =
+                  vehicle === "sedan"
+                    ? "Sedan (4 Seater)"
+                    : vehicle === "suv"
+                      ? "SUV / MUV (7 Seater)"
+                      : vehicle === "traveller12"
+                        ? "Tempo Traveller (12 Seater)"
+                        : vehicle === "traveller17"
+                          ? "Mini Traveller (17 Seater)"
+                          : vehicle === "minibus"
+                            ? "Mini Bus (26 Seater)"
+                            : "Bus (35+ Seater)";
+
                 const msg = encodeURIComponent(
                   `🚖 New Ride Enquiry
 
 📍 Pickup: ${pickup}
 🎯 Drop: ${drop}
-🚗 Vehicle: ${vehicle}`,
+🚗 Vehicle: ${vehicleName}`,
                 );
 
                 window.open(
                   `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`,
                   "_blank",
                 );
-
-                setSubmitted(true);
               }}
-              className="w-full rounded-sm bg-gradient-to-br from-[var(--electric-light)] to-[var(--electric)] px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-[var(--black)]"
+              className={`w-full rounded-sm px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] transition-all duration-300 ${
+                pickup && drop && vehicle
+                  ? "bg-gradient-to-br from-[var(--electric-light)] to-[var(--electric)] text-[var(--black)] hover:scale-[1.01]"
+                  : "bg-white/10 text-white/40 cursor-not-allowed"
+              }`}
             >
               Check Availability
             </button>
-            {submitted && (
-              <div className="mt-5 rounded-sm border border-[var(--electric)]/20 bg-[var(--electric)]/5 p-5 text-center">
-                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--electric)]/10 text-xl text-[var(--electric)]">
-                  ✓
-                </div>
-
-                <h4 className="text-lg font-semibold text-[var(--white)]">
-                  Request Submitted
-                </h4>
-
-                <p className="mt-2 text-sm text-[var(--muted)]">
-                  Your travel enquiry has been successfully received. Our team
-                  will contact you shortly with the available travel options.
-                </p>
-              </div>
-            )}
 
             <p className="text-center text-xs text-[var(--muted)] mt-3">
               ⚡ Response within 15 minutes on WhatsApp
@@ -657,29 +658,44 @@ export function RoutesSection() {
       el.scrollIntoView({ behavior: "smooth" });
     }
 
-    // store selected destination
     localStorage.setItem("selectedDrop", city);
   };
 
   return (
     <section
       id="routes"
-      className=" relative overflow-hidden py-14 px-6 xl:px-12"
+      className="relative overflow-hidden py-20 px-6 xl:px-12"
     >
-    
-      <div className="mx-auto max-w-[1300px]">
+      {/* 🌄 BACKGROUND IMAGE */}
+      <div className="absolute inset-0">
+        <img
+          src="/images/genz-travel-image-3.png"
+          alt="background"
+          className="h-full w-full object-cover opacity-30 scale-110"
+        />
+      </div>
+
+      {/* 🖤 DARK OVERLAY */}
+      <div className="absolute inset-0 bg-black/50" />
+
+      {/* ✨ ELECTRIC GLOW */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(11,182,255,0.15),transparent_60%)]" />
+
+      {/* CONTENT */}
+      <div className="relative z-10 mx-auto max-w-[1300px]">
         {/* HEADER */}
         <div className="text-center mb-14">
           <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--electric)]">
             Popular Bookings
           </p>
 
-          <h2 className="mt-3 text-4xl font-semibold text-white">
+          <h2 className="mt-3 text-4xl sm:text-5xl font-semibold text-white">
             Most Booked Destinations
           </h2>
 
-          <p className="mt-3 text-sm text-white/50 max-w-[520px] mx-auto">
-            Choose your destination and get instant ride suggestions.
+          <p className="mt-4 text-sm sm:text-base text-white/70 max-w-[600px] mx-auto leading-7">
+            Explore our most popular routes and enjoy comfortable, professional
+            travel across major cities in India.
           </p>
         </div>
 
@@ -688,13 +704,22 @@ export function RoutesSection() {
           {places.map((place) => (
             <div
               key={place.city}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] hover:border-[var(--electric)]/30 transition"
+              className="
+                group relative overflow-hidden rounded-2xl
+                border border-white/10
+                bg-white/5 backdrop-blur-xl
+                transition-all duration-300
+                hover:-translate-y-1
+                hover:border-[var(--electric)]/40
+                hover:shadow-[0_10px_40px_rgba(11,182,255,0.15)]
+              "
             >
               {/* IMAGE */}
-              <div className="relative h-[200px] overflow-hidden">
+              <div className="relative h-[180px] overflow-hidden">
                 <img
                   src={place.image}
-                  className="h-full w-full object-cover group-hover:scale-105 transition duration-500"
+                  alt={place.city}
+                  className="h-full w-full object-cover transition duration-700 group-hover:scale-110"
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
@@ -705,27 +730,33 @@ export function RoutesSection() {
                     {place.city}
                   </h3>
 
-                  <p className="text-xs text-white/60">
-                    Popular Ride Destination
+                  <p className="text-xs uppercase tracking-wider text-white/60">
+                    Popular Destination
                   </p>
                 </div>
               </div>
 
               {/* CONTENT */}
-              <div className="p-5 space-y-4">
-                {/* PRICE */}
-                <div className="flex items-center justify-between">
-                  <span className="text-white/50 text-sm">Starting Fare</span>
+              <div className="p-5">
+                <div className="flex items-center justify-between mb-5">
+                  <span className="text-sm text-white/60">Starting Fare</span>
 
-                  <span className="text-[var(--electric)] font-bold text-sm">
+                  <span className="font-bold text-[var(--electric)]">
                     {place.price}
                   </span>
                 </div>
 
-                {/* CTA */}
                 <button
                   onClick={() => handleBook(place.city)}
-                  className="w-full rounded-xl bg-[var(--electric)] py-3 text-sm font-semibold text-black transition hover:shadow-[0_10px_30px_rgba(11,182,255,0.25)]"
+                  className="
+                    w-full rounded-xl
+                    bg-[var(--electric)]
+                    py-3
+                    text-sm font-semibold
+                    text-black
+                    transition-all duration-300
+                    hover:shadow-[0_10px_30px_rgba(11,182,255,0.3)]
+                  "
                 >
                   Book Ride
                 </button>
@@ -736,9 +767,9 @@ export function RoutesSection() {
 
         {/* FOOTER */}
         <div className="mt-14 text-center">
-          <p className="text-sm text-white/50">
-            We operate across all major cities in India with sedan, SUV, and
-            traveller options.
+          <p className="text-sm text-white/60 max-w-[700px] mx-auto">
+            We operate across major cities in India with Sedan, SUV, MUV and
+            Traveller options for comfortable long-distance travel.
           </p>
         </div>
       </div>
@@ -751,7 +782,7 @@ export function TestimonialsSection() {
     {
       name: "Rohit Bitla",
       city: "Solapur → Pune",
-      rating: 5,
+      rating: 4,
       review:
         "Excellent service! The vehicle was clean, comfortable, and arrived right on time. The journey was smooth from start to finish.",
       initials: "RB",
@@ -775,7 +806,7 @@ export function TestimonialsSection() {
     {
       name: "Akshay Bhosle",
       city: "Solapur → Mumbai",
-      rating: 5,
+      rating: 4,
       review:
         "Reliable service and courteous staff. The trip was well organized and completed on schedule.",
       initials: "AB",
@@ -791,7 +822,7 @@ export function TestimonialsSection() {
     {
       name: "Vishnu Shastri Jilla",
       city: "Corporate Travel",
-      rating: 5,
+      rating: 4,
       review:
         "Professional service with punctual pickup and excellent communication. Perfect for business travel.",
       initials: "VJ",
@@ -799,7 +830,7 @@ export function TestimonialsSection() {
     {
       name: "Shankar Jilla",
       city: "Solapur → Tirupati",
-      rating: 5,
+      rating: 4,
       review:
         "Long-distance journey was extremely comfortable. The driver was experienced and safety-conscious.",
       initials: "SJ",
@@ -807,7 +838,7 @@ export function TestimonialsSection() {
     {
       name: "Varun Kalepatil",
       city: "Wedding Transfer",
-      rating: 5,
+      rating: 4,
       review:
         "Outstanding coordination and premium travel arrangements. Everything was handled perfectly.",
       initials: "VK",
@@ -818,7 +849,7 @@ export function TestimonialsSection() {
 
   return (
     <section className="relative overflow-hidden bg-[var(--black)] py-14 px-6 xl:px-12">
-      <div className="text-center mb-14">
+      <div className="text-center mb-8">
         <SectionLabel>Testimonials</SectionLabel>
         <SectionTitle light>Voices of Our Travellers</SectionTitle>
         <GoldDivider />
@@ -829,34 +860,73 @@ export function TestimonialsSection() {
         <div className="flex gap-6 w-max animate-scroll">
           {list.map((review, index) => (
             <div key={index} className="min-w-[320px] sm:min-w-[340px]">
-              {/* SAME CARD UI */}
-              <motion.div className="relative h-full flex flex-col overflow-hidden rounded-sm border border-[var(--white)]/10 bg-[var(--black-2)] p-8">
-                <div className="absolute right-6 top-6 text-[3rem] text-[var(--electric)]/12">
-                  "
+              <motion.div
+                whileHover={{ y: -6 }}
+                transition={{ duration: 0.25 }}
+                className="
+                 mx-auto
+    max-w-[380px]
+    group relative h-full flex flex-col overflow-hidden
+    rounded-3xl
+    border border-white/10
+    bg-white/[0.04]
+    backdrop-blur-xl
+    p-8
+    transition-all duration-300
+    hover:border-[var(--electric)]/30
+    hover:shadow-[0_20px_60px_rgba(11,182,255,0.12)]
+  "
+              >
+                {/* Glow Effect */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(11,182,255,0.12),transparent_60%)] opacity-0 group-hover:opacity-100 transition duration-500" />
+
+                {/* Quote Icon */}
+                <div className="absolute top-4 right-6 text-[6rem] leading-none font-serif text-[var(--electric)]/10 select-none">
+                  “
                 </div>
 
-                <div className="mb-4 flex gap-1 text-[var(--electric)]">
+                {/* Stars */}
+                <div className="relative z-10 mb-6 flex gap-1 text-[var(--electric)] text-lg">
                   {Array.from({ length: review.rating }).map((_, i) => (
                     <span key={i}>★</span>
                   ))}
                 </div>
 
-                <p className="flex-1 mb-6 text-sm italic text-[var(--white)]/75 leading-7">
+                {/* Review */}
+                <p className="relative z-10 flex-1 text-[15px] leading-8 text-white/75">
                   "{review.review}"
                 </p>
 
-                <div className="flex items-center gap-3 border-t border-[var(--white)]/10 pt-5 text-sm">
-                  <div className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-[var(--electric-light)] to-[var(--electric)] text-[0.75rem] font-bold text-[var(--black)]">
+                {/* Divider */}
+                <div className="relative z-10 my-6 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+
+                {/* User */}
+                <div className="relative z-10 flex items-center gap-4">
+                  <div
+                    className="
+        relative
+        h-12 w-12
+        rounded-full
+        bg-gradient-to-br
+        from-[var(--electric-light)]
+        to-[var(--electric)]
+        flex items-center justify-center
+        font-bold
+        text-black
+        shadow-[0_0_25px_rgba(11,182,255,0.35)]
+      "
+                  >
                     {review.initials}
                   </div>
 
                   <div>
-                    <div className="font-semibold text-[var(--white)]">
+                    <h4 className="font-semibold text-white tracking-wide">
                       {review.name}
-                    </div>
-                    <div className="text-[var(--muted)] text-xs">
+                    </h4>
+
+                    <p className="text-xs uppercase tracking-[0.15em] text-white/45">
                       {review.city}
-                    </div>
+                    </p>
                   </div>
                 </div>
               </motion.div>
@@ -916,14 +986,32 @@ export function BookingSection() {
 
     return "Bus / Coach (35+ Seater) — ₹45–₹60/km";
   }, [form.passengers]);
+  const isFormValid =
+    form.name.trim() &&
+    form.phone.trim() &&
+    form.pickup.trim() &&
+    form.drop.trim() &&
+    form.date &&
+    form.passengers;
   const handleSubmit = () => {
+    if (!isFormValid) return;
+
     const msg = encodeURIComponent(
-      `🚗 *New Booking Request — Zenyatra*\n\n👤 Name: ${form.name}\n📞 Phone: ${form.phone}\n📍 Pickup: ${form.pickup}\n🏁 Drop: ${form.drop}\n📅 Date: ${form.date}\n👥 Passengers: ${form.passengers}\n🚘 Recommended Vehicle: ${recommendedVehicle}\n\nPlease confirm availability.`,
+      `🚗 *New Booking Request — Zenyatra*
+
+👤 Name: ${form.name}
+📞 Phone: ${form.phone}
+📍 Pickup: ${form.pickup}
+🏁 Drop: ${form.drop}
+📅 Date: ${form.date}
+👥 Passengers: ${form.passengers}
+🚘 Recommended Vehicle: ${recommendedVehicle}
+
+Please confirm availability.`,
     );
 
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
   };
-
   const fields = [
     {
       label: "Your Name",
@@ -968,7 +1056,7 @@ export function BookingSection() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-[var(--black)] py-[5rem] px-6 xl:px-12"
+      className="relative overflow-hidden bg-[var(--black)] py-[4rem] px-6 xl:px-12"
     >
       <div className="relative mx-auto max-w-[800px]">
         {/* HEADER */}
@@ -1052,18 +1140,18 @@ export function BookingSection() {
               {recommendedVehicle}
             </div>
 
-            {/* CTA */}
             <button
               type="button"
+              disabled={!isFormValid}
               onClick={handleSubmit}
-              className="mt-8 w-full rounded-xl bg-gradient-to-r from-[var(--electric)] to-[var(--electric-light)] px-6 py-4 text-sm font-bold uppercase tracking-[0.18em] text-black transition hover:scale-[1.01] hover:shadow-[0_20px_50px_rgba(11,182,255,0.35)]"
+              className={`mt-8 w-full rounded-xl px-6 py-4 text-sm font-bold uppercase tracking-[0.18em] transition-all duration-300 ${
+                isFormValid
+                  ? "bg-gradient-to-r from-[var(--electric)] to-[var(--electric-light)] text-black hover:scale-[1.01] hover:shadow-[0_20px_50px_rgba(11,182,255,0.35)]"
+                  : "bg-white/10 text-white/40 cursor-not-allowed"
+              }`}
             >
               Check Availability on WhatsApp →
             </button>
-
-            <p className="mt-4 text-center text-[0.72rem] text-[var(--muted)]">
-              We’ll instantly suggest the best vehicle based on your group size.
-            </p>
           </div>
         </div>
       </div>
