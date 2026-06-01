@@ -1,5 +1,5 @@
-import VoyaGoTravel from './VoyaGo_Travel.jsx'
+import ZenYatra from "./ZenYatra.jsx";
 
 export default function App() {
-  return <VoyaGoTravel />
+  return <ZenYatra />;
 }

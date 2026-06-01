@@ -76,9 +76,9 @@ export default function Hero() {
     >
       <motion.div style={{ position: "absolute", inset: 0, y }}>
         <img
-          src="/images/car-image-bg.jpg"
+          src="/images/genz-travel-image.png"
           alt="Car background"
-          className="h-full w-full object-cover brightness-[0.25] contrast-[0.95]"
+          className="h-full w-full object-cover brightness-[0.50] contrast-[0.95]"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[rgba(7,8,9,0.55)] via-[rgba(7,8,9,0.32)] to-[rgba(7,8,9,0.92)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(11,182,255,0.14)_0%,transparent_35%)]" />

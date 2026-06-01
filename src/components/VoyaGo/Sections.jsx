@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { WA_LINK, WHATSAPP_NUMBER } from "./constants.jsx";
 import { FadeIn, GoldDivider, SectionLabel, SectionTitle } from "./atoms.jsx";
 import ertiga from "../../../src/assets/ertiga-car-pic.jpeg";
@@ -13,7 +13,6 @@ import tempo from "../../../src/assets/fleet/tempo.png";
 import miniTraveller from "../../../src/assets/fleet/mini-traveller.png";
 import bus from "../../../src/assets/fleet/bus.png";
 import luxuryBus from "../../../src/assets/fleet/luxury-bus.png";
-import { Phone, MessageCircle } from "lucide-react";
 
 import {
   Users,
@@ -33,6 +32,12 @@ import {
   Clock3,
   Route as RouteIcon,
   ArrowRight,
+  Phone,
+  MessageCircle,
+  X,
+  Percent,
+  Sparkles,
+  Tag,
 } from "lucide-react";
 
 export function QuickRideSection() {
@@ -370,8 +375,24 @@ export function TrustSection() {
   ];
 
   return (
-    <section className="bg-[var(--black-2)] py-16 px-6 xl:px-12 border-y border-white/5">
-      <div className="mx-auto max-w-[1400px]">
+    <section className="relative overflow-hidden py-20 px-6 xl:px-12 border-y border-white/5">
+      {/* 🌄 BACKGROUND IMAGE */}
+      <div className="absolute inset-0">
+        <img
+          src="/images/genz-travel-image-2.png"
+          alt="background"
+          className="h-full w-full object-cover opacity-50 scale-105"
+        />
+      </div>
+
+      {/* 🖤 DARK OVERLAY (IMPORTANT FOR PREMIUM LOOK) */}
+      <div className="absolute inset-0 bg-black/30" />
+
+      {/* subtle glow overlay */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(11,182,255,0.15),transparent_60%)]" />
+
+      {/* CONTENT */}
+      <div className="relative z-10 mx-auto max-w-[1400px]">
         {/* Header */}
         <div className="text-center mb-14">
           <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--electric)]">
@@ -382,7 +403,7 @@ export function TrustSection() {
             Travel Made Reliable
           </h2>
 
-          <p className="mt-5 max-w-[620px] mx-auto text-sm sm:text-base text-[var(--muted)] leading-7">
+          <p className="mt-5 max-w-[620px] mx-auto text-sm sm:text-base text-white/70 leading-7">
             Comfortable interstate travel backed by professional chauffeurs,
             transparent pricing and dedicated support.
           </p>
@@ -396,13 +417,22 @@ export function TrustSection() {
             return (
               <div
                 key={item.id}
-                className="group relative rounded-2xl border border-white/10 bg-white/[0.02] p-8 text-center transition-all duration-300 hover:-translate-y-1 hover:border-[var(--electric)]/30 hover:bg-white/[0.03] hover:shadow-[0_10px_40px_rgba(11,182,255,0.08)]"
+                className="
+                  group relative rounded-2xl
+                  border border-white/10
+                  bg-white/5 backdrop-blur-xl
+                  p-8 text-center
+                  transition-all duration-300
+                  hover:-translate-y-1
+                  hover:border-[var(--electric)]/40
+                  hover:bg-white/10
+                  hover:shadow-[0_10px_40px_rgba(11,182,255,0.15)]
+                "
               >
                 {/* Icon */}
                 <div className="mb-5 flex justify-center">
-                  <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--electric)]/10 group-hover:bg-[var(--electric)]/15 transition-all duration-300">
-                    {/* glow effect */}
-                    <div className="absolute inset-0 rounded-2xl bg-[var(--electric)]/10 blur-xl opacity-0 group-hover:opacity-60 transition-all duration-300" />
+                  <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--electric)]/10 group-hover:bg-[var(--electric)]/20 transition-all duration-300">
+                    <div className="absolute inset-0 rounded-2xl bg-[var(--electric)]/10 blur-xl opacity-0 group-hover:opacity-70 transition-all duration-300" />
 
                     <Icon
                       size={28}
@@ -418,9 +448,7 @@ export function TrustSection() {
                 </div>
 
                 {/* Label */}
-                <div className="mt-2 text-sm text-[var(--muted)]">
-                  {item.label}
-                </div>
+                <div className="mt-2 text-sm text-white/60">{item.label}</div>
               </div>
             );
           })}
@@ -436,42 +464,42 @@ export function FleetSection() {
       name: "Sedan",
       capacity: "4 Seater",
       image: sedan,
-      price: "₹12–₹15/km",
+      price: "₹12/km",
       badge: "Budget Friendly",
     },
     {
       name: "SUV / MUV",
       capacity: "7 Seater",
       image: suv,
-      price: "₹16–₹20/km",
+      price: "₹14/km",
       badge: "Most Popular",
     },
     {
       name: "Tempo Traveller",
       capacity: "12 Seater",
       image: tempo,
-      price: "₹22–₹28/km",
+      price: "₹18/km",
       badge: "Group Travel",
     },
     {
       name: "Mini Traveller",
       capacity: "17 Seater",
       image: miniTraveller,
-      price: "₹28–₹35/km",
+      price: "₹22/km",
       badge: "Large Groups",
     },
     {
       name: "Mini Bus",
       capacity: "26 Seater",
       image: bus,
-      price: "₹35–₹45/km",
+      price: "₹28/km",
       badge: "Tours & Events",
     },
     {
       name: "Bus / Coach",
       capacity: "35+ Seater",
       image: luxuryBus,
-      price: "₹45–₹60/km",
+      price: "₹35/km",
       badge: "Corporate & Weddings",
     },
   ];
@@ -488,7 +516,10 @@ export function FleetSection() {
   };
 
   return (
-    <section className="bg-[var(--black)] py-20 px-6 xl:px-12">
+    <section
+      id="ride-options"
+      className="bg-[var(--black)] py-14 px-6 xl:px-12"
+    >
       <div className="mx-auto max-w-[1300px]">
         {/* Header */}
         <div className="text-center mb-14">
@@ -523,8 +554,21 @@ export function FleetSection() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
 
                 {/* BADGE */}
-                <div className="absolute top-4 right-4">
-                  <span className="inline-flex items-center rounded-full bg-[var(--electric)]/15 px-4 py-2 text-[12px] font-semibold text-[var(--electric)] border border-[var(--electric)]/30 backdrop-blur-md shadow-sm">
+                <div className="absolute top-4 right-4 z-20">
+                  <span
+                    className="
+      inline-flex items-center
+      rounded-full
+      px-4 py-2
+      text-[12px]
+      font-semibold
+      text-white
+      border border-white/20
+      bg-black/60
+      backdrop-blur-md
+      shadow-[0_8px_25px_rgba(0,0,0,0.45)]
+    "
+                  >
                     {car.badge}
                   </span>
                 </div>
@@ -542,12 +586,28 @@ export function FleetSection() {
               {/* CONTENT */}
               <div className="p-5 space-y-4">
                 {/* PRICE */}
-                <div className="flex items-center justify-between">
-                  <span className="text-white/50 text-sm">Pricing</span>
+                <div className="flex items-end justify-between">
+                  {/* LABEL */}
+                  <div>
+                    <span className="text-white/50 text-xs uppercase tracking-[0.2em]">
+                      Starting Price
+                    </span>
 
-                  <span className="text-[var(--electric)] font-bold text-base px-3 py-1 rounded-full bg-[var(--electric)]/10 border border-[var(--electric)]/20">
-                    {car.price}
-                  </span>
+                    <div className="text-[11px] text-white/40 mt-1">
+                      Per Kilometer
+                    </div>
+                  </div>
+
+                  {/* BIG PRICE */}
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-[var(--electric)] leading-none">
+                      {car.price}
+                    </div>
+
+                    <div className="text-[10px] text-white/40 mt-1 uppercase tracking-[0.2em]">
+                      Transparent Pricing
+                    </div>
+                  </div>
                 </div>
 
                 {/* CTA */}
@@ -602,7 +662,22 @@ export function RoutesSection() {
   };
 
   return (
-    <section className="bg-[var(--black-2)] py-20 px-6 xl:px-12">
+    <section
+      id="routes"
+      className=" relative overflow-hidden py-14 px-6 xl:px-12"
+    >
+      {/* BG IMAGE */}
+      <div className="absolute inset-0">
+        <img
+          src="/images/genz-travel-image-3.png"
+          className="h-full w-full object-cover opacity-20"
+          alt=""
+        />
+      </div>
+
+      {/* DARK OVERLAY */}
+      <div className="absolute inset-0 bg-black/20" />
+
       <div className="mx-auto max-w-[1300px]">
         {/* HEADER */}
         <div className="text-center mb-14">
@@ -721,7 +796,7 @@ export function TestimonialsSection() {
   const list = [...reviews, ...reviews]; // duplicate for seamless loop
 
   return (
-    <section className="relative overflow-hidden bg-[var(--black)] py-20 px-6 xl:px-12">
+    <section className="relative overflow-hidden bg-[var(--black)] py-14 px-6 xl:px-12">
       <div className="text-center mb-14">
         <SectionLabel>Testimonials</SectionLabel>
         <SectionTitle light>Voices of Our Travellers</SectionTitle>
@@ -885,26 +960,6 @@ export function BookingSection() {
             Enter your trip details — we’ll automatically suggest the best
             vehicle for your group size.
           </p>
-        </div>
-
-        {/* STATS */}
-        <div className="mb-8 grid grid-cols-3 gap-3">
-          <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-center">
-            <div className="text-lg font-bold text-[var(--electric)]">
-              15 Min
-            </div>
-            <div className="text-xs text-[var(--muted)]">Response Time</div>
-          </div>
-
-          <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-center">
-            <div className="text-lg font-bold text-[var(--electric)]">24×7</div>
-            <div className="text-xs text-[var(--muted)]">Support</div>
-          </div>
-
-          <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-center">
-            <div className="text-lg font-bold text-[var(--electric)]">500+</div>
-            <div className="text-xs text-[var(--muted)]">Trips</div>
-          </div>
         </div>
 
         {/* FORM */}
@@ -1107,5 +1162,111 @@ export function FloatingWA() {
         <MessageCircle size={26} />
       </motion.a>
     </div>
+  );
+}
+
+export function DiscountPanel() {
+  const [open, setOpen] = useState(true);
+
+  return (
+    <>
+      {/* CLOSED TAB */}
+      {!open && (
+        <button
+          onClick={() => setOpen(true)}
+          className="
+            fixed left-0 top-1/2 z-50 -translate-y-1/2
+            bg-[var(--electric)]
+            text-black
+            px-3 py-4
+            rounded-r-xl
+            font-bold text-[10px]
+            tracking-[0.25em]
+            shadow-[0_10px_30px_rgba(11,182,255,0.35)]
+          "
+        >
+          OFFER
+        </button>
+      )}
+
+      {/* PANEL */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ x: -320, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -320, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 140, damping: 20 }}
+            className="
+              fixed left-4 top-1/2 z-50 -translate-y-1/2
+              w-[260px]
+              rounded-2xl
+              border border-white/10
+              bg-black/80
+              backdrop-blur-xl
+              shadow-[0_25px_70px_rgba(0,0,0,0.6)]
+              overflow-hidden
+            "
+          >
+            {/* TOP BAR */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <Tag size={14} className="text-[var(--electric)]" />
+                <span className="text-[10px] uppercase tracking-[0.25em] text-white/70">
+                  Limited Offer
+                </span>
+              </div>
+
+              <button
+                onClick={() => setOpen(false)}
+                className="text-white/40 hover:text-white"
+              >
+                <X size={14} />
+              </button>
+            </div>
+
+            {/* BODY */}
+            <div className="p-5 text-center">
+              {/* MAIN OFFER ONLY */}
+              <h2 className="text-2xl font-bold text-white">
+                10% <span className="text-[var(--electric)]">OFF</span>
+              </h2>
+
+              <p className="mt-2 text-xs text-white/60 leading-5">
+                On all outstation rides above 100 km
+              </p>
+
+              {/* CTA */}
+              <button
+                className="
+                mt-4 w-full
+                rounded-xl
+                bg-[var(--electric)]
+                py-2.5
+                text-xs font-bold uppercase tracking-[0.2em]
+                text-black
+                hover:scale-[1.02]
+                transition
+              "
+                onClick={() => {
+                  const section = document.getElementById("contact");
+
+                  if (section) {
+                    section.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                  }
+
+                  setOpen(false); // optional: close the panel after click
+                }}
+              >
+                Claim Now
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
